@@ -25,12 +25,22 @@ extern "C" {
         filter_atom = XInternAtom(display, property_name, True);
         status = XGetWindowProperty(display, window, filter_atom, 0, MAXSTR, False, AnyPropertyType,
                                     &actual_type, &actual_format, &nitems, &bytes_after, &prop);
+
+        if (status != Success) {
+            return 0;
+        }
+
         return prop;
     }
 
     unsigned long get_long_property(char* property_name)
     {
-        get_string_property(property_name);
+        unsigned char* prop = get_string_property(property_name);
+
+        if (prop == 0) {
+            return 0;
+        }
+
         unsigned long long_property = prop[0] + (prop[1]<<8) + (prop[2]<<16) + (prop[3]<<24);
         return long_property;
     }
