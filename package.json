@@ -12,6 +12,7 @@
     "window-manager",
     "xorg",
     "active-window",
+    "window"
   ],
   "description": "Get information about active windows on Windows, Linux and MacOS",
   "main": "index.js",
