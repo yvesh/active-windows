@@ -10,6 +10,7 @@
 #include <string>
 
 extern "C" {
+    // SEE xprop
     #define MAXSTR 1000
     unsigned long window;
     unsigned char *prop;

@@ -1,4 +1,3 @@
-const wm = require('./build/Release/wm');
+const activeWindows = require('./build/Release/wm');
 
-console.log(wm);
-console.log(wm.getActiveWindowLinux());
+module.exports = activeWindows;

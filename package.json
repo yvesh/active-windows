@@ -1,23 +1,26 @@
 {
   "name": "active-windows",
   "version": "0.1.0",
+  "author": "Yves Hoppe <contact@bytee.net> (https://bytee.net)",
+  "homepage": "https://bytee.net",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yvesh/active-windows"
+  },
+  "keywords": [
+    "current-window",
+    "window-manager",
+    "xorg",
+    "active-window",
+  ],
   "description": "Get information about active windows on Windows, Linux and MacOS",
   "main": "index.js",
   "gypfile": true,
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "build": "node-gyp rebuild",
     "clean": "node-gyp clean"
   },
-  "keywords": [
-    "xorg",
-    "windows",
-    "active-windows",
-    "darwin",
-    "macos"
-  ],
-  "author": "Yves Hoppe <info@bytee.net>",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "node-addon-api": "^1.7.1"
   }
