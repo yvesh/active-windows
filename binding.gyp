@@ -14,8 +14,8 @@
              ]
            }
          ],
-         ['OS=="windows"', {
-           'sources': ["cppsrc/main.cpp", "cppsrc/linux/windowlinux.cpp"]
+         ['OS=="win"', {
+           'sources': ["cppsrc/main.cpp", "cppsrc/windows/windowwindows.cpp"]
             }
          ]
       ],
