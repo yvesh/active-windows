@@ -1,9 +1,7 @@
 #include "windowlinux.h"
 
-#ifdef __linux__
 #include <X11/Xlib.h>
 #include <X11/Xatom.h>
-#endif
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -86,7 +84,7 @@ Napi::Object windowlinux::getActiveWindowWrapped(const Napi::CallbackInfo& info)
 Napi::Object windowlinux::Init(Napi::Env env, Napi::Object exports)
 {
   exports.Set(
-    "getActiveWindowLinux", Napi::Function::New(env, windowlinux::getActiveWindowWrapped)
+    "getActiveWindow", Napi::Function::New(env, windowlinux::getActiveWindowWrapped)
   );
 
   return exports;

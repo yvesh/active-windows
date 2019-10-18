@@ -1,3 +1,5 @@
 .idea/
+.vs/
+
 build/
 node_modules/
