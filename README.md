@@ -4,7 +4,7 @@ Node C++ N-API module to get information on the currently selected window on Lin
 
 > Currently only supports Windows and Linux / Xorg. 
 
-Work in progress, not ready for production. Not on every platform all information are supported.
+Work in progress. Not on every platform all information are supported.
 
 ### Building / Installation
 
@@ -19,6 +19,8 @@ const activeWindows = require('active-windows');
 
 console.log(activeWindows.getActiveWindow());
 ```
+
+See `sample.js` for more information.
 
 ### Return-Value
 
@@ -35,6 +37,6 @@ console.log(activeWindows.getActiveWindow());
   // Window Type (Linux only)
   windowType: '340',
   // Process ID of the window
-  windowPid: '34218'
+  windowPid: '34218',
 }
 ```

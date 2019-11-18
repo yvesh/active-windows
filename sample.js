@@ -1,11 +1,16 @@
-const activeWindows = require('./build/Release/wm');
+/**
+ * Executes getActiveWindow every second and prints it the console
+ */
+const activeWindows = require('./index');
 
-setInterval(() => {
-    let result = activeWindows.getActiveWindow();
+const interval = setInterval(() => {
+  let result = activeWindows.getActiveWindow();
 
-    if (result.error) {
-        console.log(result);
-    }
-},1000);
+  console.log(result);
 
-module.exports = activeWindows;
+  // Error returned from cpp is added to the object
+  if (result.error) {
+      console.log('error', result);
+      clearInterval(interval);
+  }
+}, 1000);

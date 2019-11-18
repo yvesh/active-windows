@@ -3,8 +3,8 @@
     {
       "target_name": "wm",
       "sources": [ "cppsrc/main.cpp"],
-      "cflags": ["-fno-exceptions", "-std=c++11", "-lX11"],
-      "cflags_cc": ["-fno-exceptions -lX11"],
+      "cflags": ["-fexceptions -std=c++11", "-lX11"],
+      "cflags_cc": ["-fexceptions -lX11"],
       'conditions': [
          ['OS=="linux"', {
            'sources': ["cppsrc/main.cpp", "cppsrc/linux/windowlinux.cpp"],
