@@ -6,6 +6,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string>
+#include <stdexcept>
 
 extern "C" {
     // SEE xprop
@@ -55,7 +56,16 @@ void windowlinux::getActiveWindow(Napi::Object &obj) {
     Display* display = getDisplay();
     int screen = XDefaultScreen(display);
     window = RootWindow(display, screen);
+
+    if (!window) {
+        throw std::invalid_argument("Couldn't get window.");
+    }
+
     window = get_long_property("_NET_ACTIVE_WINDOW");
+
+    if (!window) {
+        throw std::invalid_argument("Couldn't get _NET_ACTIVE_WINDOW (is 0).");
+    }
 
     std::string wm_pid = std::to_string(get_long_property("_NET_WM_PID"));
     char* wm_name = reinterpret_cast<char*>(get_string_property("_NET_WM_NAME"));
@@ -73,12 +83,25 @@ void windowlinux::getActiveWindow(Napi::Object &obj) {
 
 Napi::Object windowlinux::getActiveWindowWrapped(const Napi::CallbackInfo& info)
 {
-  Napi::Env env = info.Env();
+    Napi::Env env = info.Env();
+    Napi::Object obj = Napi::Object::New(env);
 
-  Napi::Object obj = Napi::Object::New(env);
-  windowlinux::getActiveWindow(obj);
+    try {
+        windowlinux::getActiveWindow(obj);
+    } catch (const std::invalid_argument& e) {
+        // For compatibility
+        obj.Set("os", "linux");
+        obj.Set("windowClass", "");
+        obj.Set("windowName", "");
+        obj.Set("windowDesktop", "0");
+        obj.Set("windowType", "0");
+        obj.Set("windowPid", "0");
 
-  return obj;
+        obj.Set("error", "1");
+        obj.Set("errorMessage", e.what());
+    }
+
+    return obj;
 }
 
 Napi::Object windowlinux::Init(Napi::Env env, Napi::Object exports)
