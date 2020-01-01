@@ -9,9 +9,9 @@
          ['OS=="linux"', {
            'sources': ["cppsrc/main.cpp", "cppsrc/linux/windowlinux.cpp"],
            'libraries': [
-               "/usr/lib64/libX11.so",
-               "/usr/lib64/libXss.so",
-               "/usr/lib64/libxcb.so"
+               "-lX11",
+               "-lXss",
+               "-lxcb"
              ],
              'cflags': ["-fexceptions -std=c++11 -lX11 -lXext -lXss"],
              'cflags_cc': ["-fexceptions -lX11 -lXext -lXss"],
