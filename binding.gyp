@@ -3,15 +3,18 @@
     {
       "target_name": "wm",
       "sources": [ "cppsrc/main.cpp"],
-      "cflags": ["-fexceptions -std=c++11", "-lX11"],
-      "cflags_cc": ["-fexceptions -lX11"],
+      "cflags": ["-fexceptions -std=c++11"],
+      "cflags_cc": ["-fexceptions"],
       'conditions': [
          ['OS=="linux"', {
            'sources': ["cppsrc/main.cpp", "cppsrc/linux/windowlinux.cpp"],
            'libraries': [
                "/usr/lib64/libX11.so",
+               "/usr/lib64/libXss.so",
                "/usr/lib64/libxcb.so"
-             ]
+             ],
+             'cflags': ["-fexceptions -std=c++11 -lX11 -lXext -lXss"],
+             'cflags_cc': ["-fexceptions -lX11 -lXext -lXss"],
            }
          ],
          ['OS=="win"', {

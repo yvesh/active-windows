@@ -35,6 +35,7 @@ void windowwindows::getActiveWindow(Napi::Object& obj) {
 	obj.Set("windowDesktop", "0");
 	obj.Set("windowType", "0");
 	obj.Set("windowPid", std::to_string(pid));
+	obj.Set("idleTime", "0");
 }
 
 Napi::Object windowwindows::getActiveWindowWrapped(const Napi::CallbackInfo& info)

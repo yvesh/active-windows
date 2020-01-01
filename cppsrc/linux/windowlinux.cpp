@@ -2,11 +2,15 @@
 
 #include <X11/Xlib.h>
 #include <X11/Xatom.h>
+#include <X11/Xutil.h>
+#include <X11/extensions/scrnsaver.h>
 
+#include <time.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string>
 #include <stdexcept>
+#include <unistd.h>
 
 extern "C" {
     // SEE xprop
@@ -67,6 +71,15 @@ void windowlinux::getActiveWindow(Napi::Object &obj) {
         throw std::invalid_argument("Couldn't get _NET_ACTIVE_WINDOW (is 0).");
     }
 
+    time_t idle_time;
+    static XScreenSaverInfo *mit_info;
+    mit_info = XScreenSaverAllocInfo();
+    screen = DefaultScreen(display);
+
+    XScreenSaverQueryInfo(display, RootWindow(display,screen), mit_info);
+    idle_time = (mit_info->idle) / 1000;
+    XFree(mit_info);
+
     std::string wm_pid = std::to_string(get_long_property("_NET_WM_PID"));
     char* wm_name = reinterpret_cast<char*>(get_string_property("_NET_WM_NAME"));
     char* wm_class = reinterpret_cast<char*>(get_string_property("WM_CLASS"));
@@ -77,6 +90,7 @@ void windowlinux::getActiveWindow(Napi::Object &obj) {
     obj.Set("windowDesktop", std::to_string(get_long_property("_NET_WM_DESKTOP")));
     obj.Set("windowType", std::to_string(get_long_property("_NET_WM_WINDOW_TYPE")));
     obj.Set("windowPid", wm_pid);
+    obj.Set("idleTime", std::to_string(idle_time));
 
     XCloseDisplay(display);
 }

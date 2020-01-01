@@ -1,6 +1,6 @@
 {
   "name": "active-windows",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "author": "Yves Hoppe <contact@bytee.net> (https://bytee.net)",
   "homepage": "https://bytee.net",
   "repository": {
@@ -14,7 +14,7 @@
     "active-window",
     "window"
   ],
-  "description": "Get information about active windows on Windows, Linux and MacOS",
+  "description": "Get information about active windows and idle time on Windows, Linux and MacOS",
   "main": "index.js",
   "gypfile": true,
   "scripts": {
