@@ -1,6 +1,6 @@
 # Active Window
 
-Node C++ N-API module to get information on the currently selected window on Linux, MacOS and Windows.
+Node C++ N-API module to get information on the currently selected window and the user idle time on Linux, MacOS and Windows.
 
 > Currently only supports Windows and Linux / Xorg. 
 
@@ -38,5 +38,7 @@ See `sample.js` for more information.
   windowType: '340',
   // Process ID of the window
   windowPid: '34218',
+  // Idle Time in seconds
+  idleTime: '42',
 }
 ```
