@@ -24,5 +24,8 @@
   "license": "MIT",
   "dependencies": {
     "node-addon-api": "^1.7.1"
+  },
+  "binary": {
+    "napi_versions": [3]
   }
 }
