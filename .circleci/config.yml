@@ -9,6 +9,7 @@ jobs:
       - image: electronuserland/builder:12
     steps:
       - checkout
+      - run: apt-get update && apt-get install -y libxss-dev
       - run: npm install
       - run: prebuild --all -r napi --strip -u $GH_TOKEN
 
