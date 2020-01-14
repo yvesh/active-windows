@@ -22,7 +22,7 @@ jobs:
       - run: npm install --global --production windows-build-tools --vs2015
       - run: npm install -g node-gyp prebuild
       - run: npm install
-      - run: prebuild --all -r napi --strip -u $GH_TOKEN
+      - run: prebuild --all -r napi --strip -u $env:GH_TOKEN
 
   build_macos:
     macos:
@@ -30,6 +30,7 @@ jobs:
     steps:
       - checkout
       - run: npm install
+      - run: npm install -g node-gyp prebuild
       - run: prebuild --all -r napi --strip -u $GH_TOKEN
 
 workflows:
