@@ -2,13 +2,17 @@
 
 #include <windows.h>
 #include <stringapiset.h>
-#include <string>
 
+#include <codecvt>
+#include <string>
+#include <locale>
 
 void windowwindows::getActiveWindow(Napi::Object& obj) {
-	char window_title[256];
+	WCHAR window_title[256];
 	HWND foreground_window = GetForegroundWindow();
-	GetWindowText(foreground_window, window_title, sizeof(window_title));
+	GetWindowTextW(foreground_window, window_title, 256);
+
+	std:setlocale(LC_ALL, "en_US.UTF-8");
 
 	DWORD pid;
 	GetWindowThreadProcessId(foreground_window, &pid);
@@ -37,9 +41,12 @@ void windowwindows::getActiveWindow(Napi::Object& obj) {
 	GetLastInputInfo( &last_input );
 	idle_time = (GetTickCount() - last_input.dwTime) / 1000;
 
+	std::wstring ws( window_title );
+	std::wstring_convert<std::codecvt_utf8<wchar_t>> myconv;
+
 	obj.Set("os", "windows");
 	obj.Set("windowClass", fullpath);
-	obj.Set("windowName", window_title);
+	obj.Set("windowName", myconv.to_bytes(ws));
 	obj.Set("windowDesktop", "0");
 	obj.Set("windowType", "0");
 	obj.Set("windowPid", std::to_string(pid));

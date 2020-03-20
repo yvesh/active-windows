@@ -1,6 +1,6 @@
 {
   "name": "active-windows",
-  "version": "0.1.10",
+  "version": "0.1.11",
   "author": "Yves Hoppe <contact@bytee.net> (https://bytee.net)",
   "homepage": "https://bytee.net",
   "repository": {
@@ -18,7 +18,7 @@
   "main": "index.js",
   "gypfile": true,
   "scripts": {
-    "install": "prebuild-install || node-gyp rebuild",  
+    "install": "prebuild-install || node-gyp rebuild",
     "build": "node-gyp rebuild",
     "clean": "node-gyp clean"
   },
@@ -27,6 +27,8 @@
     "node-addon-api": "^1.7.1"
   },
   "binary": {
-    "napi_versions": [3]
+    "napi_versions": [
+      3
+    ]
   }
 }
