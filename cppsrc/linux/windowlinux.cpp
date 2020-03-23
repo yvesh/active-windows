@@ -81,8 +81,18 @@ void windowlinux::getActiveWindow(Napi::Object &obj) {
     XFree(mit_info);
 
     std::string wm_pid = std::to_string(get_long_property("_NET_WM_PID"));
-    char* wm_name = reinterpret_cast<char*>(get_string_property("_NET_WM_NAME"));
     char* wm_class = reinterpret_cast<char*>(get_string_property("WM_CLASS"));
+    
+    // std::printf("_NET_WM_NAME: %s\n", get_string_property("_NET_WM_NAME"));
+
+    // Workaround for null values
+    unsigned char* net_wm_name = get_string_property("_NET_WM_NAME");
+
+    char* wm_name = "";
+
+    if (net_wm_name != NULL) {
+        wm_name = reinterpret_cast<char*>(get_string_property("_NET_WM_NAME"));
+    }
 
     obj.Set("os", "linux");
     obj.Set("windowClass", wm_class);
