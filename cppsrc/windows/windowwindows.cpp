@@ -34,12 +34,25 @@ void windowwindows::getActiveWindow(Napi::Object& obj) {
 
 	// Last input time
 	LASTINPUTINFO last_input;
-    // without setting cbSize GetLastError() returns the parameter is incorrect
-    last_input.cbSize = sizeof(last_input);  
+
+    // Without setting cbSize GetLastError() returns the parameter is incorrect
+    last_input.cbSize = sizeof(last_input);
 	DWORD idle_time;
 
 	GetLastInputInfo( &last_input );
 	idle_time = (GetTickCount() - last_input.dwTime) / 1000;
+
+    if (std::to_string(pid) == "0") {
+        // Just for the idle time
+        obj.Set("os", "windows");
+    	obj.Set("windowClass", "");
+    	obj.Set("windowName", "");
+    	obj.Set("windowDesktop", "0");
+    	obj.Set("windowType", "0");
+    	obj.Set("windowPid", "0");
+    	obj.Set("idleTime", std::to_string(idle_time));
+    	return;
+    }
 
 	std::wstring ws( window_title );
 	std::wstring_convert<std::codecvt_utf8<wchar_t>> myconv;
