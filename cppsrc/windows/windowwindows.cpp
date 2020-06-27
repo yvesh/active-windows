@@ -8,7 +8,7 @@
 #include <locale>
 
 void windowwindows::getActiveWindow(Napi::Object& obj) {
-	WCHAR window_title[256];
+	WCHAR window_title[256] {};
 	HWND foreground_window = GetForegroundWindow();
 	GetWindowTextW(foreground_window, window_title, 256);
 
@@ -17,14 +17,17 @@ void windowwindows::getActiveWindow(Napi::Object& obj) {
 	DWORD pid;
 	GetWindowThreadProcessId(foreground_window, &pid);
 	// Process
-	TCHAR process_filename[MAX_PATH];
-	DWORD charsCarried = MAX_PATH;
+	std::string fullpath;
+	if (HANDLE hProc = OpenProcess(PROCESS_QUERY_LIMITED_INFORMATION | PROCESS_QUERY_INFORMATION, false, pid)) {
+		TCHAR process_filename[MAX_PATH];
+		DWORD charsCarried = MAX_PATH;
 
-	HANDLE hProc = OpenProcess(PROCESS_QUERY_LIMITED_INFORMATION | PROCESS_QUERY_INFORMATION, false, pid);
+		if (QueryFullProcessImageNameA(hProc, 0, process_filename, &charsCarried)) {
+			fullpath = std::string(process_filename, charsCarried);
+		}
 
-	QueryFullProcessImageNameA(hProc, 0, process_filename, &charsCarried);
-
-	std::string fullpath = process_filename;
+		CloseHandle(hProc);
+	}
 
 	const size_t last_slash_idx = fullpath.find_last_of("\\/");
 
@@ -33,14 +36,15 @@ void windowwindows::getActiveWindow(Napi::Object& obj) {
 	}
 
 	// Last input time
-	LASTINPUTINFO last_input;
+	LASTINPUTINFO last_input {};
 
     // Without setting cbSize GetLastError() returns the parameter is incorrect
     last_input.cbSize = sizeof(last_input);
-	DWORD idle_time;
+	DWORD idle_time = 0UL;
 
-	GetLastInputInfo( &last_input );
-	idle_time = (GetTickCount() - last_input.dwTime) / 1000;
+	if (GetLastInputInfo(&last_input)) {
+		idle_time = ( GetTickCount() - last_input.dwTime ) / 1000;
+	}
 
     if (std::to_string(pid) == "0") {
         // Just for the idle time
