@@ -1,6 +1,6 @@
 {
   "name": "active-windows",
-  "version": "0.1.13",
+  "version": "0.1.14",
   "author": "Yves Hoppe <contact@bytee.net> (https://bytee.net)",
   "homepage": "https://bytee.net",
   "repository": {
@@ -24,7 +24,7 @@
   },
   "license": "MIT",
   "dependencies": {
-    "node-addon-api": "^1.7.1"
+    "node-addon-api": "^1.7.2"
   },
   "binary": {
     "napi_versions": [
